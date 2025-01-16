@@ -50,6 +50,13 @@ def add_text(epi):
     font = pygame.font.SysFont("Ariel",32)
     text = font.render(epi, True, "white")
     screen.blit(text, [0, 0])
+
+def create_scene(smile):
+    screen.fill("white")
+    init_screen()
+    smile.add(screen)
+
+
 def q_move(smile,clock):
     maze = np.array([
         [1, 1, 1, 1, 1, 1, 1],
@@ -96,28 +103,23 @@ def q_move(smile,clock):
 
 def main():
     clock = pygame.time.Clock()
-
-    tomove=0
-
-
-
-
+    to_move=True
     pygame.init()
     global screen
     screen_size = (WINDOW_WIDTH, WINDOW_HEIGHT)
     screen = pygame.display.set_mode(screen_size)
     finish = False
-
     smile = Smile(300,100)
-    while not finish:
-        screen.fill("white")
-        init_screen()
-        smile.add(screen)
 
-            #### ***** preparations *******
-        if tomove ==0:
+    while not finish:
+
+        create_scene(smile)
+
+        if to_move:
+
             q_move(smile,clock)
-            tomove+=1
+
+            to_move = False
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
